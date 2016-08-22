@@ -1,0 +1,304 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "B2SHARE API",
+        "description": "EUDAT B2SHARE API",
+        "version": "1.0.0"
+    },
+    "host": "trng-b2share.eudat.eu",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/records": {
+            "get": {
+                "summary": "List records",
+                "description": "List all the deposition records, without any filtering.\n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "page_offset",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Deposition"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of records",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Deposition"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/depositions": {
+            "post": {
+                "summary": "Create a new deposition",
+                "description": "Create a new deposition",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Deposition"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "An array of price estimates by product",
+                        "schema": {
+                            "properties": {
+                                "deposit_id": {
+                                    "type": "string",
+                                    "description": "."
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "."
+                                },
+                                "location": {
+                                    "type": "string",
+                                    "description": "."
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/deposition/{deposition_id}/files": {
+            "post": {
+                "summary": "Create a new deposition",
+                "description": "Create a new deposition",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "deposition_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "formData",
+                        "description": "The avatar of the user",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "tags": [
+                    "Deposition"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of price estimates by product",
+                        "schema": {
+                            "properties": {
+                                "files": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/FileInfo"
+                                    },
+                                    "description": "."
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "."
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Create a new deposition",
+                "description": "Create a new deposition",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "deposition_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Deposition"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of price estimates by product",
+                        "schema": {
+                            "properties": {
+                                "files": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/FileInfo"
+                                    },
+                                    "description": "."
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Deposition": {
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of product."
+                },
+                "display_name": {
+                    "type": "string",
+                    "description": "Display name of product."
+                },
+                "capacity": {
+                    "type": "string",
+                    "description": "Capacity of product. For example, 4 people."
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Image URL representing the product."
+                }
+            }
+        },
+        "Metadata": {
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles"
+                },
+                "currency_code": {
+                    "type": "string",
+                    "description": "[ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) currency code."
+                },
+                "display_name": {
+                    "type": "string",
+                    "description": "Display name of product."
+                },
+                "estimate": {
+                    "type": "string",
+                    "description": "Formatted string of estimate in local currency of the start location. Estimate could be a range, a single number (flat rate) or \"Metered\" for TAXI."
+                },
+                "low_estimate": {
+                    "type": "number",
+                    "description": "Lower bound of the estimated price."
+                },
+                "high_estimate": {
+                    "type": "number",
+                    "description": "Upper bound of the estimated price."
+                },
+                "surge_multiplier": {
+                    "type": "number",
+                    "description": "Expected surge multiplier. Surge is active if surge_multiplier is greater than 1. Price estimate already factors in the surge multiplier."
+                }
+            }
+        },
+        "FileInfo": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "First name of the Uber user."
+                },
+                "size": {
+                    "type": "number",
+                    "description": "Last name of the Uber user."
+                }
+            }
+        },
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
