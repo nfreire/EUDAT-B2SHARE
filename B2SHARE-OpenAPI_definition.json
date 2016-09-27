@@ -215,62 +215,230 @@
                     }
                 }
             }
-        }
+        },
+        "/deposition/{deposition_id}/commit": {
+            "post": {
+                "summary": "Commits a deposition",
+                "description": "Commits a deposition",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "deposition_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metadata",
+                        "in": "body",
+                        "description": "The metadata",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Metadata"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Deposition"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of price estimates by product",
+                        "schema": {
+                            "properties": {
+                                "files": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/FileInfo"
+                                    },
+                                    "description": "."
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "."
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        } 
     },
     "definitions": {
-        "Deposition": {
+    	"Deposition": {
+    		"required" : [ "deposition_id" ],
             "properties": {
-                "product_id": {
-                    "type": "string",
-                    "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
-                },
-                "description": {
-                    "type": "string",
-                    "description": "Description of product."
-                },
-                "display_name": {
-                    "type": "string",
-                    "description": "Display name of product."
-                },
-                "capacity": {
-                    "type": "string",
-                    "description": "Capacity of product. For example, 4 people."
-                },
-                "image": {
-                    "type": "string",
-                    "description": "Image URL representing the product."
+                "deposition_id": {
+                    "type": "number",
+                    "description": "."
                 }
             }
         },
         "Metadata": {
+    		"required" : [ "description", "title", "language_code", "ling_resource_type" ],
             "properties": {
-                "product_id": {
-                    "type": "string",
-                    "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles"
-                },
-                "currency_code": {
-                    "type": "string",
-                    "description": "[ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) currency code."
-                },
-                "display_name": {
-                    "type": "string",
-                    "description": "Display name of product."
-                },
-                "estimate": {
-                    "type": "string",
-                    "description": "Formatted string of estimate in local currency of the start location. Estimate could be a range, a single number (flat rate) or \"Metered\" for TAXI."
-                },
-                "low_estimate": {
+                "record_id": {
                     "type": "number",
-                    "description": "Lower bound of the estimated price."
+                    "description": "."
                 },
-                "high_estimate": {
-                    "type": "number",
-                    "description": "Upper bound of the estimated price."
+                "open_access": {
+                    "type": "boolean",
+                    "description": "."
                 },
-                "surge_multiplier": {
+                "title": {
+                    "type": "string",
+                    "description": "."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "."
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "."
+                },
+                "discipline": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "."
+                },
+                "contributors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "."
+                },
+                "creator": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "."
+                },
+                "date": {
+                    "type": "string",
+                    "description": "."
+                },
+                "pid": {
+                    "type": "string",
+                    "description": "."
+                },
+                "email": {
+                    "type": "string",
+                    "description": "."
+                },
+                "file_url": {
+                    "type": "string",
+                    "description": "."
+                },
+                "licence": {
+                    "type": "string",
+                    "description": "."
+                },
+                "publication_date": {
+                    "type": "string",
+                    "description": "."
+                },
+                "language_code": {
+                    "type": "string",
+                    "description": "."
+                },
+                "language": {
+                    "type": "string",
+                    "description": "."
+                },
+                "publisher": {
+                    "type": "string",
+                    "description": "."
+                },
+                "project_name": {
+                    "type": "string",
+                    "description": "."
+                },
+                "quality": {
+                    "type": "string",
+                    "description": "."
+                },
+                "region": {
+                    "type": "string",
+                    "description": "."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "."
+                },
+                "contact_email": {
+                    "type": "string",
+                    "description": "."
+                },
+                "alternate_identifier": {
+                    "type": "string",
+                    "description": "."
+                },
+                "keywords": {
+                    "type": "string",
+                    "description": "."
+                },
+                "embargo_till": {
+                    "type": "string",
+                    "description": "."
+                },
+                "ling_resource_type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum" : ["Text", "Image", "Video", "Audio", "Time-Series", "Other"]
+                    },
+                    "description": "."
+                },
+                "resource_type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum" : ["Text", "Image", "Video", "Audio", "Time-Series", "Other"]
+                    },
+                    "description": "."
+                },
+                "filea": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FileDetailInfo"
+                    }
+                }
+            }
+        },
+        "FileDetailInfo": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "First name of the Uber user."
+                },
+                "size": {
                     "type": "number",
-                    "description": "Expected surge multiplier. Surge is active if surge_multiplier is greater than 1. Price estimate already factors in the surge multiplier."
+                    "description": "Last name of the Uber user."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "Last name of the Uber user."
                 }
             }
         },
